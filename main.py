@@ -20,7 +20,7 @@ class MyWidget(QMainWindow):
             json_response = response.json()
             toponym = json_response["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]
             toponym_address = toponym["metaDataProperty"]["GeocoderMetaData"][
-                                  "text"] + ", Государственный исторический музей Москвы"
+                                  "text"]
             toponym_coodrinates = toponym["Point"]["pos"]
             print(toponym_address, "имеет координаты:", toponym_coodrinates)
         else:
