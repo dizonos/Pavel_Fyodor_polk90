@@ -19,10 +19,21 @@ class MyWidget(QMainWindow):
         if response:
             json_response = response.json()
             toponym = json_response["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]
-            toponym_address = toponym["metaDataProperty"]["GeocoderMetaData"][
-                                  "text"]
+            toponym_address = toponym["metaDataProperty"]["GeocoderMetaData"]["text"]
             toponym_coodrinates = toponym["Point"]["pos"]
             self.lineEdit_2.setText(toponym_address + " имеет координаты:" + toponym_coodrinates)
+            map_request = 'http://static-maps.yandex.ru/1.x/'
+            params = {
+                'll': ','.join(toponym_coodrinates.split(' ')),
+                'l': 'map'
+            }
+            response = requests.get(map_request, params=params)
+            self.map_file = "map.png"
+            with open(self.map_file, "wb") as file:
+                file.write(response.content)
+            self.pixmap = QPixmap(self.map_file)
+            self.image = self.label
+            self.image.setPixmap(self.pixmap)
         else:
             print("Ошибка выполнения запроса:")
             print(zapros)
