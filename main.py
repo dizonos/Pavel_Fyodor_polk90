@@ -12,6 +12,10 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('zadacha_design.ui', self)
         self.pushButton_4.clicked.connect(self.search)
+        self.pushButton_2.clicked.connect(self.sat)
+        self.pushButton_3.clicked.connect(self.gibr)
+        self.pushButton.clicked.connect(self.map)
+        self.view = 'map'
 
     def search(self):
         zapros = f"https://geocode-maps.yandex.ru/1.x/?apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode={self.lineEdit.text()}1&format=json"
@@ -25,7 +29,11 @@ class MyWidget(QMainWindow):
             map_request = 'http://static-maps.yandex.ru/1.x/'
             params = {
                 'll': ','.join(toponym_coodrinates.split(' ')),
+<<<<<<< HEAD
+                'l': self.view
+=======
                 'l': 'map'
+>>>>>>> origin/master
             }
             response = requests.get(map_request, params=params)
             self.map_file = "map.png"
@@ -39,23 +47,14 @@ class MyWidget(QMainWindow):
             print(zapros)
             print("Http статус:", response.status_code, "(", response.reason, ")")
 
+    def sat(self):
+        self.view = 'sat'
 
-    #
-    # def getImage(self):
-    #     map_request = "http://static-maps.yandex.ru/1.x/?ll=37.530887,55.703118&spn=0.002,0.002&l=map"
-    #     response = requests.get(map_request)
-    #
-    #     if not response:
-    #         print("Ошибка выполнения запроса:")
-    #         print(map_request)
-    #         print("Http статус:", response.status_code, "(", response.reason, ")")
-    #         sys.exit(1)
-    #     self.map_file = "map.png"
-    #     with open(self.map_file, "wb") as file:
-    #         file.write(response.content)
-    #
-    # def closeEvent(self, event):
-    #     os.remove(self.map_file)
+    def gibr(self):
+        self.view = 'skl'
+
+    def map(self):
+        self.view = 'map'
 
 
 if __name__ == '__main__':
